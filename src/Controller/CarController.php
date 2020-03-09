@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Car;
 use App\Repository\CarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,5 +35,15 @@ class CarController extends AbstractController
     //   Response::HTTP_OK,
     //   ['Content-type' => 'application/json']
     // );
+  }
+
+  /**
+   * @Route("/car/{id}", name="car_detail", methods={"GET"})
+   */
+  public function detail(Car $car)
+  {
+    return $this->json([
+      'car' => $car
+    ]);
   }
 }
