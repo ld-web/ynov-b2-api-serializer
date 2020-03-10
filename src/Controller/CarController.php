@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class CarController extends AbstractController
@@ -79,7 +80,21 @@ class CarController extends AbstractController
       $em->persist($car);
       $em->flush();
 
-      return $this->json($car, Response::HTTP_CREATED);
+      return $this->json(
+        $car,
+        Response::HTTP_CREATED,
+        [],
+        ["groups" => "car:create"]
+      );
+
+      // Equivalent, mais en ignorant 2 attributs
+      // au lieu d'en inclure plusieurs dans un groupe
+      // return $this->json(
+      //   $car,
+      //   Response::HTTP_CREATED,
+      //   [],
+      //   [AbstractNormalizer::IGNORED_ATTRIBUTES => ["created", "visible"]]
+      // );
     }
 
     return new Response("ok");

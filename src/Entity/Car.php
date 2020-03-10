@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
@@ -13,21 +14,25 @@ class Car
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("car:create")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("car:create")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("car:create")
      */
     private $releaseYear;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups("car:create")
      */
     private $kilometers;
 
@@ -38,6 +43,7 @@ class Car
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("car:create")
      */
     private $transmission;
 
