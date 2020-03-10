@@ -69,6 +69,13 @@ class CarController extends AbstractController
     $form->submit($data);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      // On pourrait renseigner la date de création à ce niveau
+      // Mais si on a besoin de créer une voiture ailleurs que dans ce contrôleur,
+      // alors il faudra penser à renseigner la date de création.
+      // On rique donc :
+      // - d'oublier de renseigner cette date
+      // - et, si on y pense, tout simplement de dupliquer notre code
+      // $car->setCreated(new DateTime());
       $em->persist($car);
       $em->flush();
 

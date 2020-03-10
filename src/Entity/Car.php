@@ -41,6 +41,11 @@ class Car
      */
     private $transmission;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Car
     public function setTransmission(int $transmission): self
     {
         $this->transmission = $transmission;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
 
         return $this;
     }
