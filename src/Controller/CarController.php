@@ -96,6 +96,10 @@ class CarController extends AbstractBaseController
       // );
     }
 
+    // Si on est pas passé dans le if,
+    // Alors notre formulaire est invalide
+    // On récupère donc les erreurs à l'aide de notre méthode
+    // Et on la renvoie au client
     $errors = $this->getFormErrors($form);
     return $this->json(
       $errors,

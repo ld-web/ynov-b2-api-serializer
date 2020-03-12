@@ -45,6 +45,11 @@ class Car
     /**
      * @ORM\Column(type="integer")
      * @Groups("car:create")
+     * Contrainte de validation, pour vérifier, lors d'une validation d'entité Car,
+     * que le champ $transmission contient une donnée valide.
+     * Pour avoir la liste des données valides, le composant de validation
+     * va exécuter la méthode Transmission::getTransmissions.
+     * Si la valeur passée n'existe pas dans le tableau de valeurs valides, alors la validation échoue
      * @Assert\Choice(callback={"App\Car\Transmission", "getTransmissions"})
      */
     private $transmission;
