@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Car;
 use App\Form\CarType;
+use App\Form\Error\FormErrorHandler;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,7 +59,8 @@ class CarController extends AbstractController
    */
   public function create(
     Request $request,
-    EntityManagerInterface $em
+    EntityManagerInterface $em,
+    FormErrorHandler $formErrorHandler
   ) {
     $data = json_decode($request->getContent(), true);
     $car = new Car();
@@ -95,10 +97,12 @@ class CarController extends AbstractController
       //   [],
       //   [AbstractNormalizer::IGNORED_ATTRIBUTES => ["created", "visible"]]
       // );
-    } else {
-      $errors = $form->getErrors(true);
     }
 
-    return new Response("ok");
+    $errors = $formErrorHandler->getErrors($form);
+    return $this->json(
+      $errors,
+      Response::HTTP_BAD_REQUEST
+    );
   }
 }
