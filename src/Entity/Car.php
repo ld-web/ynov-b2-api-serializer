@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
@@ -44,6 +45,7 @@ class Car
     /**
      * @ORM\Column(type="integer")
      * @Groups("car:create")
+     * @Assert\Choice(callback={"App\Car\Transmission", "getTransmissions"})
      */
     private $transmission;
 

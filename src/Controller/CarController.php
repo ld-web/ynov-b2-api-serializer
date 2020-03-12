@@ -95,6 +95,8 @@ class CarController extends AbstractController
       //   [],
       //   [AbstractNormalizer::IGNORED_ATTRIBUTES => ["created", "visible"]]
       // );
+    } else {
+      $errors = $form->getErrors(true);
     }
 
     return new Response("ok");
