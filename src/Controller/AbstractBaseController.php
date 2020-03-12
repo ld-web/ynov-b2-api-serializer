@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Form\Error;
+namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 
-class FormErrorHandler
+abstract class AbstractBaseController extends AbstractController
 {
-  public function getErrors(FormInterface $form): array
+  protected function getFormErrors(FormInterface $form): array
   {
     $errors = [];
     $formErrors = $form->getErrors(true);

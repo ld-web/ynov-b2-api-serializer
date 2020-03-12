@@ -4,17 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Car;
 use App\Form\CarType;
-use App\Form\Error\FormErrorHandler;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class CarController extends AbstractController
+class CarController extends AbstractBaseController
 {
   /**
    * @Route("/car", name="car_list", methods={"GET"})
@@ -59,8 +57,7 @@ class CarController extends AbstractController
    */
   public function create(
     Request $request,
-    EntityManagerInterface $em,
-    FormErrorHandler $formErrorHandler
+    EntityManagerInterface $em
   ) {
     $data = json_decode($request->getContent(), true);
     $car = new Car();
@@ -99,7 +96,7 @@ class CarController extends AbstractController
       // );
     }
 
-    $errors = $formErrorHandler->getErrors($form);
+    $errors = $this->getFormErrors($form);
     return $this->json(
       $errors,
       Response::HTTP_BAD_REQUEST
