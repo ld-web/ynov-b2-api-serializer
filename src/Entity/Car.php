@@ -9,9 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
  */
-class Car
+class Car extends AbstractEntity
 {
-  use CreatedTrait;
+  // use CreatedTrait;
 
   /**
    * @ORM\Id()

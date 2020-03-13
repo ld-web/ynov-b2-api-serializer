@@ -2,8 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Car;
-use App\Entity\Color;
+use App\Entity\AbstractEntity;
 use DateTime;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
@@ -22,7 +21,7 @@ class EntityCreatedSubscriber implements EventSubscriber
   {
     $object = $args->getObject();
 
-    if ($object instanceof Car || $object instanceof Color) {
+    if ($object instanceof AbstractEntity) {
       $object->setCreated(new DateTime());
     }
   }

@@ -10,10 +10,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ColorRepository")
  */
-class Color
+class Color extends AbstractEntity
 {
-  use CreatedTrait;
-  
+  // use CreatedTrait;
+
   /**
    * @ORM\Id()
    * @ORM\GeneratedValue()
