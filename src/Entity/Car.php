@@ -11,146 +11,131 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Car
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups("car:detail")
-     */
-    private $id;
+  use CreatedTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups("car:detail")
-     */
-    private $name;
+  /**
+   * @ORM\Id()
+   * @ORM\GeneratedValue()
+   * @ORM\Column(type="integer")
+   * @Groups("car:detail")
+   */
+  private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups("car:detail")
-     */
-    private $releaseYear;
+  /**
+   * @ORM\Column(type="string", length=255)
+   * @Groups("car:detail")
+   */
+  private $name;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups("car:detail")
-     */
-    private $kilometers;
+  /**
+   * @ORM\Column(type="integer")
+   * @Groups("car:detail")
+   */
+  private $releaseYear;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $visible;
+  /**
+   * @ORM\Column(type="integer", nullable=true)
+   * @Groups("car:detail")
+   */
+  private $kilometers;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups("car:detail")
-     * Contrainte de validation, pour vérifier, lors d'une validation d'entité Car,
-     * que le champ $transmission contient une donnée valide.
-     * Pour avoir la liste des données valides, le composant de validation
-     * va exécuter la méthode Transmission::getTransmissions.
-     * Si la valeur passée n'existe pas dans le tableau de valeurs valides, alors la validation échoue
-     * @Assert\Choice(callback={"App\Car\Transmission", "getTransmissions"})
-     */
-    private $transmission;
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  private $visible;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
+  /**
+   * @ORM\Column(type="integer")
+   * @Groups("car:detail")
+   * Contrainte de validation, pour vérifier, lors d'une validation d'entité Car,
+   * que le champ $transmission contient une donnée valide.
+   * Pour avoir la liste des données valides, le composant de validation
+   * va exécuter la méthode Transmission::getTransmissions.
+   * Si la valeur passée n'existe pas dans le tableau de valeurs valides, alors la validation échoue
+   * @Assert\Choice(callback={"App\Car\Transmission", "getTransmissions"})
+   */
+  private $transmission;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Color", inversedBy="cars")
-     * @Groups("car:detail")
-     */
-    private $color;
+  /**
+   * @ORM\ManyToOne(targetEntity="App\Entity\Color", inversedBy="cars")
+   * @Groups("car:detail")
+   */
+  private $color;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
+  public function getName(): ?string
+  {
+    return $this->name;
+  }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+  public function setName(string $name): self
+  {
+    $this->name = $name;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getReleaseYear(): ?int
-    {
-        return $this->releaseYear;
-    }
+  public function getReleaseYear(): ?int
+  {
+    return $this->releaseYear;
+  }
 
-    public function setReleaseYear(int $releaseYear): self
-    {
-        $this->releaseYear = $releaseYear;
+  public function setReleaseYear(int $releaseYear): self
+  {
+    $this->releaseYear = $releaseYear;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getKilometers(): ?int
-    {
-        return $this->kilometers;
-    }
+  public function getKilometers(): ?int
+  {
+    return $this->kilometers;
+  }
 
-    public function setKilometers(?int $kilometers): self
-    {
-        $this->kilometers = $kilometers;
+  public function setKilometers(?int $kilometers): self
+  {
+    $this->kilometers = $kilometers;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getVisible(): ?bool
-    {
-        return $this->visible;
-    }
+  public function getVisible(): ?bool
+  {
+    return $this->visible;
+  }
 
-    public function setVisible(bool $visible): self
-    {
-        $this->visible = $visible;
+  public function setVisible(bool $visible): self
+  {
+    $this->visible = $visible;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getTransmission(): ?int
-    {
-        return $this->transmission;
-    }
+  public function getTransmission(): ?int
+  {
+    return $this->transmission;
+  }
 
-    public function setTransmission(int $transmission): self
-    {
-        $this->transmission = $transmission;
+  public function setTransmission(int $transmission): self
+  {
+    $this->transmission = $transmission;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
+  public function getColor(): ?Color
+  {
+    return $this->color;
+  }
 
-    public function setCreated(\DateTimeInterface $created): self
-    {
-        $this->created = $created;
+  public function setColor(?Color $color): self
+  {
+    $this->color = $color;
 
-        return $this;
-    }
-
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
+    return $this;
+  }
 }
