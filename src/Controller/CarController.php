@@ -14,6 +14,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class CarController extends AbstractBaseController
 {
+  // Injection de dépendace par constructeur
+  private $em;
+
+  public function __construct(EntityManagerInterface $em)
+  {
+    $this->em = $em;
+  }
+  
   /**
    * @Route("/car", name="car_list", methods={"GET"})
    */
@@ -56,8 +64,7 @@ class CarController extends AbstractBaseController
    * @Route("/car", name="car_create", methods={"POST"})
    */
   public function create(
-    Request $request,
-    EntityManagerInterface $em
+    Request $request
   ) {
     $data = json_decode($request->getContent(), true);
     $car = new Car();
@@ -76,8 +83,8 @@ class CarController extends AbstractBaseController
       // - d'oublier de renseigner cette date
       // - et, si on y pense, tout simplement de dupliquer notre code
       // $car->setCreated(new DateTime());
-      $em->persist($car);
-      $em->flush();
+      $this->em->persist($car);
+      $this->em->flush();
 
       return $this->json(
         $car,
@@ -100,6 +107,56 @@ class CarController extends AbstractBaseController
     // Alors notre formulaire est invalide
     // On récupère donc les erreurs à l'aide de notre méthode
     // Et on la renvoie au client
+    $errors = $this->getFormErrors($form);
+    return $this->json(
+      $errors,
+      Response::HTTP_BAD_REQUEST
+    );
+  }
+
+  /**
+   * @Route("/car/{id}", name="car_patch", methods={"PATCH"})
+   */
+  public function patch(Car $car, Request $request)
+  {
+    return $this->update($request, $car, false);
+  }
+
+  /**
+   * @Route("/car/{id}", name="car_put", methods={"PUT"})
+   */
+  public function put(Car $car, Request $request)
+  {
+    return $this->update($request, $car);
+  }
+
+  /**
+   * @Route("/car/{id}", name="car_delete", methods={"DELETE"})
+   */
+  public function delete(Car $car)
+  {
+    $this->em->remove($car);
+    $this->em->flush();
+
+    return $this->json('ok');
+  }
+
+  private function update(
+    Request $request,
+    Car $car,
+    bool $clearMissing = true
+  ) {
+    $data = json_decode($request->getContent(), true);
+    $form = $this->createForm(CarType::class, $car);
+
+    $form->submit($data, $clearMissing);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $this->em->flush();
+
+      return $this->json($car);
+    }
+
     $errors = $this->getFormErrors($form);
     return $this->json(
       $errors,
