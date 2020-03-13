@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Car\Transmission;
 use App\Entity\Car;
+use App\Entity\Color;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
@@ -15,6 +16,16 @@ class AppFixtures extends Fixture
     $faker = Faker\Factory::create('fr_FR');
     $faker->addProvider(new Faker\Provider\Fakecar($faker));
 
+    $color = new Color();
+    $color->setName('black')
+      ->setHexCode('#000');
+    $manager->persist($color);
+
+    $color2 = new Color();
+    $color2->setName('white')
+      ->setHexCode('#FFF');
+    $manager->persist($color2);
+
     for ($i = 0; $i < 50; $i++) {
       $car = new Car();
 
@@ -24,7 +35,8 @@ class AppFixtures extends Fixture
         ->setVisible($faker->boolean(80))
         ->setTransmission(
           $faker->numberBetween(Transmission::AUTO, Transmission::HYBRID)
-      );
+        )
+        ->setColor($color);
 
       $manager->persist($car);
     }

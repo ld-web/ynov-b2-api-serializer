@@ -15,25 +15,25 @@ class Car
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("car:create")
+     * @Groups("car:detail")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("car:create")
+     * @Groups("car:detail")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("car:create")
+     * @Groups("car:detail")
      */
     private $releaseYear;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups("car:create")
+     * @Groups("car:detail")
      */
     private $kilometers;
 
@@ -44,7 +44,7 @@ class Car
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("car:create")
+     * @Groups("car:detail")
      * Contrainte de validation, pour vérifier, lors d'une validation d'entité Car,
      * que le champ $transmission contient une donnée valide.
      * Pour avoir la liste des données valides, le composant de validation
@@ -58,6 +58,12 @@ class Car
      * @ORM\Column(type="datetime")
      */
     private $created;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Color", inversedBy="cars")
+     * @Groups("car:detail")
+     */
+    private $color;
 
     public function getId(): ?int
     {
@@ -132,6 +138,18 @@ class Car
     public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

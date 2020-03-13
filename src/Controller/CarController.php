@@ -55,9 +55,12 @@ class CarController extends AbstractBaseController
    */
   public function detail(Car $car)
   {
-    return $this->json([
-      'car' => $car
-    ]);
+    return $this->json(
+      ['car' => $car], // données à sérialiser
+      Response::HTTP_OK, // Code de réponse HTTP
+      [], // En-têtes
+      ['groups' => 'car:detail'] // Contexte
+    );
   }
 
   /**
@@ -90,7 +93,7 @@ class CarController extends AbstractBaseController
         $car,
         Response::HTTP_CREATED,
         [],
-        ["groups" => "car:create"]
+        ["groups" => "car:detail"]
       );
 
       // Equivalent, mais en ignorant 2 attributs

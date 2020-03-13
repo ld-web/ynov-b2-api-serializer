@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Car;
+use App\Entity\Color;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +19,9 @@ class CarType extends AbstractType
             ->add('kilometers')
             ->add('visible')
             ->add('transmission')
+            ->add('color', EntityType::class, [
+              'class' => Color::class
+            ])
         ;
     }
 
